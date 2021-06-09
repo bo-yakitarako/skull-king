@@ -1,6 +1,5 @@
 import { useCallback, useEffect } from 'react';
 
-const WEBSOCKET_ORIGIN = 'ws://skull-king.bo-yakitarako.com/socket/';
 const socket = new WebSocket(WEBSOCKET_ORIGIN);
 
 const useWebSocket = () => {

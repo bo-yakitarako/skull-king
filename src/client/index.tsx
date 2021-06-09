@@ -10,3 +10,7 @@ render(
   </Provider>,
   document.getElementById('app'),
 );
+
+declare global {
+  const WEBSOCKET_ORIGIN: string;
+}

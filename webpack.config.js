@@ -1,4 +1,8 @@
 const path = require('path');
+const webpack = require('webpack');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 module.exports = {
   mode: 'development',
@@ -36,4 +40,9 @@ module.exports = {
     path: path.resolve(__dirname, 'public', 'js'),
     filename: 'bundle.js',
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      WEBSOCKET_ORIGIN: JSON.stringify(process.env.WEBSOCKET_ORIGIN),
+    }),
+  ],
 };

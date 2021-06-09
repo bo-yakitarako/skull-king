@@ -2,8 +2,10 @@
     "private": true,
     "scripts": {
         "server": "nodemon -L",
-        "watch": "webpack-cli serve --mode development",
-        "build": "tsc && webpack --mode production",
+        "watch": "WEBSOCKET_ORIGIN=ws://localhost:5001 webpack-cli serve --mode development",
+        "client-build": "WEBSOCKET_ORIGIN=ws://skull-king.bo-yakitarako.com/socket/ webpack --mode production",
+        "server-build": "tsc -p .",
+        "build": "yarn server-build && yarn front-build",
         "production": "node ./dist/server/index.js"
     },
     "dependencies": {
