@@ -1,4 +1,5 @@
 import express from 'express';
+import './webSocket';
 
 const app = express();
 
