@@ -1,15 +1,19 @@
 /* eslint-disable no-param-reassign */
 
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
-  count: 0,
+  comment: '',
 };
 
 const app = createSlice({
   name: 'template',
   initialState,
-  reducers: {},
+  reducers: {
+    setComment: (state, { payload }: PayloadAction<string>) => {
+      state.comment = payload;
+    },
+  },
 });
 
 export { app };

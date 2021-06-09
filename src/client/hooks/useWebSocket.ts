@@ -1,8 +1,12 @@
-import { useCallback, useEffect } from 'react';
-
-const socket = new WebSocket(WEBSOCKET_ORIGIN);
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { app } from '../modules/app';
 
 const useWebSocket = () => {
+  const dispatch = useDispatch();
+
+  const [socket, setWebSocket] = useState(new WebSocket(WEBSOCKET_ORIGIN));
+
   const sendMessage = useCallback((message: string) => {
     socket.send(message);
   }, []);
@@ -12,9 +16,14 @@ const useWebSocket = () => {
       console.log('WebSocketサーバーと接続成功！');
     };
     socket.onmessage = (event: MessageEvent<string>) => {
-      console.log(event.data);
+      dispatch(app.actions.setComment(event.data));
     };
-  }, []);
+    socket.onclose = () => {
+      console.log('閉じます');
+      setWebSocket(new WebSocket(WEBSOCKET_ORIGIN));
+      document.location.reload();
+    };
+  }, [socket]);
 
   return { sendMessage };
 };
