@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { app } from '../modules/app';
 
+const socket = new WebSocket(WEBSOCKET_ORIGIN);
+
 const useWebSocket = () => {
   const dispatch = useDispatch();
-
-  const [socket, setWebSocket] = useState(new WebSocket(WEBSOCKET_ORIGIN));
 
   const sendMessage = useCallback((message: string) => {
     socket.send(message);
@@ -20,7 +20,6 @@ const useWebSocket = () => {
     };
     socket.onclose = () => {
       console.log('閉じます');
-      setWebSocket(new WebSocket(WEBSOCKET_ORIGIN));
       document.location.reload();
     };
   }, [socket]);
