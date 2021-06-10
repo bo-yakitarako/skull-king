@@ -8,7 +8,8 @@ import styled, {
 } from 'styled-components';
 import { useWebSocket } from '../hooks/useWebSocket';
 import { useSelector } from '../hooks/useSelector';
-import { theme } from '../modules/theme';
+import { theme } from '../style/theme';
+import { HeadBar } from './HeadBar';
 
 const App: React.FC = () => {
   const comment = useSelector(({ comment }) => comment);
@@ -18,6 +19,7 @@ const App: React.FC = () => {
     <StylesProvider injectFirst>
       <MaterialThemeProvider theme={theme}>
         <StyledThemeProvider theme={theme}>
+          <HeadBar />
           <textarea
             value={message}
             onChange={(event) => setMessage(event.target.value)}
