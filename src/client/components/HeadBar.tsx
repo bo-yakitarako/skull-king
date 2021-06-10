@@ -10,9 +10,11 @@ import {
 import { AccountCircle, Menu, Settings } from '@material-ui/icons';
 import { media } from '../style/media';
 import { SPMenu } from './SPMenu';
+import { useDialog } from '../hooks/useDialog';
 
 const HeadBar: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [, openSetting] = useDialog('setting');
 
   const handleDrawerOpen = useCallback(() => {
     setDrawerOpen(true);
@@ -47,7 +49,7 @@ const HeadBar: React.FC = () => {
           <ActionButton color="inherit" variant="outlined">
             リセット
           </ActionButton>
-          <IconButton color="inherit">
+          <IconButton color="inherit" onClick={openSetting}>
             <Settings />
           </IconButton>
         </LayoutPC>

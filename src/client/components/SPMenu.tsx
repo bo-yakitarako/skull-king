@@ -15,6 +15,7 @@ import {
 } from '@material-ui/icons';
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
+import { useDialog } from '../hooks/useDialog';
 
 type Props = {
   open: boolean;
@@ -22,6 +23,8 @@ type Props = {
 };
 
 const SPMenu: React.FC<Props> = ({ open, onClose }) => {
+  const [, openSetting] = useDialog('setting');
+
   const items = useMemo(
     () => [
       {
@@ -42,7 +45,8 @@ const SPMenu: React.FC<Props> = ({ open, onClose }) => {
         icon: <Settings />,
         text: '設定',
         onClick: () => {
-          console.log('せっていだあ');
+          openSetting();
+          onClose();
         },
       },
     ],

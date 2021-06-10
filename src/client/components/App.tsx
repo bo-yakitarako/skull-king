@@ -7,6 +7,7 @@ import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { theme } from '../style/theme';
 import { HeadBar } from './HeadBar';
 import { MainContents } from './MainContents';
+import { SettingDialog } from './dialogs/SettingDialog';
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
         <StyledThemeProvider theme={theme}>
           <HeadBar />
           <MainContents />
+          <SettingDialog />
         </StyledThemeProvider>
       </MaterialThemeProvider>
     </StylesProvider>
