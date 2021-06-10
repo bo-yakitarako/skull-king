@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import {
   AppBar,
@@ -9,15 +9,27 @@ import {
 } from '@material-ui/core';
 import { AccountCircle, Menu, Settings } from '@material-ui/icons';
 import { media } from '../style/media';
+import { SPMenu } from './SPMenu';
 
 const HeadBar: React.FC = () => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const handleDrawerOpen = useCallback(() => {
+    setDrawerOpen(true);
+  }, []);
+
+  const handleDrawerClose = useCallback(() => {
+    setDrawerOpen(false);
+  }, []);
+
   return (
     <AppBar color="primary" position="static">
       <Toolbar>
         <LayoutSP>
-          <IconButton edge="start" color="inherit">
+          <IconButton edge="start" color="inherit" onClick={handleDrawerOpen}>
             <Menu />
           </IconButton>
+          <SPMenu open={drawerOpen} onClose={handleDrawerClose} />
         </LayoutSP>
         <Title variant="h6">Skull Kingは神ゲー</Title>
         <LayoutSP>
