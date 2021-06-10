@@ -4,6 +4,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
   comment: '',
+  setting: {
+    fontSize: 32,
+    cellWidth: 150,
+  },
 };
 
 const app = createSlice({

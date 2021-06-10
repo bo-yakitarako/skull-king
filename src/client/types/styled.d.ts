@@ -8,11 +8,13 @@ declare module 'styled-components' {
         main: string;
         light: string;
         dark: string;
+        contrastText: string;
       };
       secondary: {
         main: string;
         light: string;
         dark: string;
+        contrastText: string;
       };
       text: {
         primary: string;
