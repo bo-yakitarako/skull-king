@@ -171,7 +171,6 @@ const StyledTh = styled(TableCell)<Th & Setting>`
   width: ${({ cellwidth }) => cellwidth}px;
   background-color: ${({ theme }) => theme.palette.primary.main};
   color: ${({ theme: { palette }, loginuser }) => {
-    console.log(loginuser);
     return loginuser ? palette.secondary.light : palette.primary.contrastText;
   }};
   padding: ${({ fontSize }) => (fontSize < 20 ? 10 : 15)}px;
