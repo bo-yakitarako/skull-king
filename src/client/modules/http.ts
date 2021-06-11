@@ -12,13 +12,20 @@ const axios = axiosBase.create({
   responseType: 'json',
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function get<API>(path: string, params = {} as { [key in string]: any }) {
-  const { data } = await axios.get<API>(path, {
+async function get<Res, Req>(path: string, params = {} as Req) {
+  const { data } = await axios.get<Res>(path, {
     method: 'get',
     params,
   });
   return data;
 }
 
-export { get };
+async function post<Res, Req>(path: string, params = {} as Req) {
+  const { data } = await axios.post<Res>(path, {
+    method: 'post',
+    params,
+  });
+  return data;
+}
+
+export { get, post };
