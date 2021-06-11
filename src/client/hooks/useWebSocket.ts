@@ -1,11 +1,16 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import ReconnectingWebSocket from 'reconnecting-websocket';
 import { app } from '../modules/app';
-import { useSelector } from './useSelector';
+
+const socket = new ReconnectingWebSocket(WEBSOCKET_ORIGIN, undefined, {
+  maxReconnectionDelay: 4000,
+  minReconnectionDelay: 1000,
+  connectionTimeout: 1500,
+});
 
 const useWebSocket = () => {
   const dispatch = useDispatch();
-  const socket = useSelector(({ socket }) => socket);
 
   const sendMessage = useCallback(
     (message: string) => {
