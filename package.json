@@ -6,7 +6,13 @@
         "client-build": "WEBSOCKET_ORIGIN=ws://skull-king.bo-yakitarako.com/socket/ webpack --mode production",
         "server-build": "tsc -p .",
         "build": "yarn server-build && yarn client-build",
-        "production": "node ./dist/server/index.js"
+        "production": "node ./dist/server/index.js",
+        "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
+        "typeorm:prod": "node ./node_modules/typeorm/cli.js",
+        "migration:generate": "rm -rf ./dist && yarn server-build && typeorm migration:generate -n",
+        "migration:run": "rm -rf ./dist && yarn server-build && typeorm migration:run",
+        "prod:migration-generate": "typeorm migration:generate -c production -n",
+        "prod:migration-run": "typeorm migration:run -c production"
     },
     "dependencies": {
         "@material-ui/core": "^4.11.4",
@@ -23,6 +29,7 @@
         "redux": "^4.1.0",
         "styled-components": "^5.3.0",
         "styled-media-query": "^2.1.2",
+        "typeorm": "^0.2.34",
         "ws": "^7.4.6"
     },
     "devDependencies": {
