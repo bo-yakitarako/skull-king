@@ -15,7 +15,7 @@ import { useDialog } from '../hooks/useDialog';
 const HeadBar: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [, openSetting] = useDialog('setting');
-  const [, openAdd] = useDialog('addOrEdit');
+  const [, openAdd] = useDialog('scoreSend');
 
   const handleDrawerOpen = useCallback(() => {
     setDrawerOpen(true);

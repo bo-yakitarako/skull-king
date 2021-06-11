@@ -155,6 +155,9 @@ const Wrapper = styled(TableContainer)`
 const StyledTable = styled(Table)`
   table-layout: fixed;
   width: fit-content;
+  ${media.lessThan('medium')`
+    margin: 0 auto;
+  `}
 `;
 
 const DummyTh = styled(TableCell)<{ fontSize: number }>`
