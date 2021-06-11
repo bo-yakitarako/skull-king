@@ -1,11 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Typography } from '@material-ui/core';
-import { useSelector } from '../hooks/useSelector';
+import { useShallowEqualSelector } from '../hooks/useShallowEqualSelector';
 import { media } from '../style/media';
+import { useRanking } from '../hooks/useRanking';
 
 const Ranking: React.FC = () => {
-  const { fontSize } = useSelector(({ setting }) => setting);
+  const { fontSize, ownId } = useShallowEqualSelector(({ setting, user }) => ({
+    fontSize: setting.fontSize,
+    ownId: user.id,
+  }));
+
+  const users = useRanking();
 
   return (
     <Wrapper>
@@ -13,26 +19,22 @@ const Ranking: React.FC = () => {
         <HeadText fontSize={fontSize}>ランキング</HeadText>
       </Head>
       <Players fontSize={fontSize}>
-        <Row>
-          <Order fontSize={fontSize}>1</Order>
-          <Name fontSize={fontSize}>ざえもん</Name>
-          <Score fontSize={fontSize}>+210</Score>
-        </Row>
-        <Row>
-          <Order fontSize={fontSize}>2</Order>
-          <Name fontSize={fontSize}>あああ</Name>
-          <Score fontSize={fontSize}>+100</Score>
-        </Row>
-        <Row>
-          <Order fontSize={fontSize}>3</Order>
-          <Name fontSize={fontSize}>しんにじえも</Name>
-          <Score fontSize={fontSize}>+20</Score>
-        </Row>
-        <Row>
-          <Order fontSize={fontSize}>4</Order>
-          <Name fontSize={fontSize}>ぶりぶり</Name>
-          <Score fontSize={fontSize}>-40</Score>
-        </Row>
+        {users.map(({ userId, rank, userName, scoreText }, index) => {
+          const own = userId === ownId ? 'true' : 'false';
+          return (
+            <Row key={`${userName}${index}`}>
+              <Order fontSize={fontSize} own={own}>
+                {rank}
+              </Order>
+              <Name fontSize={fontSize} own={own}>
+                {userName}
+              </Name>
+              <Score fontSize={fontSize} own={own}>
+                {scoreText}
+              </Score>
+            </Row>
+          );
+        })}
       </Players>
     </Wrapper>
   );
@@ -88,11 +90,13 @@ const Row = styled.div`
   }
 `;
 
-const Cell = styled(Typography)<{ fontSize: number }>`
+const Cell = styled(Typography)<{ fontSize: number; own: 'true' | 'false' }>`
   font-size: ${({ fontSize }) => fontSize}px;
   text-align: right;
   padding: 12px 8px;
   line-height: ${({ fontSize }) => fontSize + 4}px;
+  ${({ own, theme }) =>
+    own === 'true' && `color: ${theme.palette.secondary.main};`}
 `;
 
 const Order = styled(Cell)`
