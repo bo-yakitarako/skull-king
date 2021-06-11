@@ -1,5 +1,5 @@
-import { Scores } from './entity/Scores';
 import { Users } from './entity/Users';
+import { Scores } from './entity/Scores';
 import { find, findOne, save } from './utility';
 
 const getUserIdFromName = async (userName: string) => {
@@ -18,19 +18,25 @@ const register = async (userName: string) => {
 };
 
 const getData = async () => {
-  const users = await find(Users);
-  const data = await Promise.all(
-    users.map(async ({ userId, userName }) => {
-      const scores = (
-        await find(Scores, {
-          select: ['score'],
-          where: { userId },
-          order: { battleIndex: 'ASC' },
-        })
-      ).map(({ score }) => score);
-      return { userName, scores };
-    }),
-  );
+  const users = await find(Users, { order: { userId: 'ASC' } });
+  const scores = await find(Scores);
+  const data = users.map(({ userName, userId }) => {
+    const userScores = scores.filter((score) => score.userId === userId);
+    const fullScores = [...Array(10)].map((v, index) => {
+      const battleScore = userScores.find(
+        ({ battleIndex }) => battleIndex === index,
+      );
+      if (typeof battleScore === 'undefined') {
+        return null;
+      }
+      return battleScore.score;
+    });
+    return {
+      userId,
+      userName,
+      scores: fullScores,
+    };
+  });
   return data;
 };
 

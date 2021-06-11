@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { register } from '../actions/app';
+import { fetchData, register } from '../actions/app';
 
 const setting: { fontSize: number; cellWidth: number } = localStorage.setting
   ? JSON.parse(localStorage.setting)
@@ -12,12 +12,18 @@ const setting: { fontSize: number; cellWidth: number } = localStorage.setting
 
 const userName: string = localStorage.userName || '';
 
+const initialData = [...Array(3)].map((v, index) => {
+  const scores: (number | null)[] = [...Array(10)].map(() => null);
+  return { userId: -index, userName: '-', scores };
+});
+
 const initialState = {
   user: {
     id: 0,
     name: userName,
   },
   comment: '',
+  data: initialData,
   setting,
   dialog: {
     registration: false,
@@ -27,6 +33,7 @@ const initialState = {
 };
 
 type User = typeof initialState.user;
+type Data = typeof initialData;
 
 type DialogType = keyof typeof initialState.dialog;
 
@@ -67,7 +74,14 @@ const app = createSlice({
       localStorage.userName = name;
       state.user = { id, name };
     });
+    builder.addCase(fetchData.fulfilled, (state, { payload }) => {
+      const user = payload.find(({ userName }) => userName === state.user.name);
+      if (typeof user !== 'undefined') {
+        state.user.id = user.userId;
+      }
+      state.data = payload;
+    });
   },
 });
 
-export { app, DialogType, Setting };
+export { app, DialogType, Setting, Data };

@@ -12,13 +12,13 @@ import { SettingDialog } from './dialogs/SettingDialog';
 import { ScoreSendDialog } from './dialogs/ScoreSendDialog';
 import { AddButton } from './AddButton';
 import { RegistrationDialog } from './dialogs/RegistrationDialog';
-import { checkRegistration } from '../actions/app';
+import { fetchData } from '../actions/app';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(checkRegistration());
+    dispatch(fetchData());
   }, []);
 
   return (

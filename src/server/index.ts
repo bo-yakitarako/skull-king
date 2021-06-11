@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import express, { Request as ExpressRequest } from 'express';
-import { getUserIdFromName, register } from './api';
+import { getData, register } from './api';
 import './webSocket';
 
 config();
@@ -19,16 +19,15 @@ app.get('/', (req, res) => {
   res.sendFile(`${PUBLIC_ROOT}/index.html`);
 });
 
+app.get('/api/data', async (req, res) => {
+  const data = await getData();
+  res.json(data);
+});
+
 type Register = { userName: string };
 app.post('/api/register', async (req: Request<Register>, res) => {
   const { userName } = req.body;
   const userId = await register(userName);
-  res.json({ userId });
-});
-
-app.post('/api/checkRegistration', async (req: Request<Register>, res) => {
-  const { userName } = req.body;
-  const userId = await getUserIdFromName(userName);
   res.json({ userId });
 });
 
