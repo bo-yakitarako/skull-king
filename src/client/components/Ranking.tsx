@@ -16,22 +16,22 @@ const Ranking: React.FC = () => {
         <Row>
           <Order fontSize={fontSize}>1</Order>
           <Name fontSize={fontSize}>ざえもん</Name>
-          <Cell fontSize={fontSize}>+210</Cell>
+          <Score fontSize={fontSize}>+210</Score>
         </Row>
         <Row>
           <Order fontSize={fontSize}>2</Order>
           <Name fontSize={fontSize}>あああ</Name>
-          <Cell fontSize={fontSize}>+100</Cell>
+          <Score fontSize={fontSize}>+100</Score>
         </Row>
         <Row>
           <Order fontSize={fontSize}>3</Order>
           <Name fontSize={fontSize}>しんにじえも</Name>
-          <Cell fontSize={fontSize}>+20</Cell>
+          <Score fontSize={fontSize}>+20</Score>
         </Row>
         <Row>
           <Order fontSize={fontSize}>4</Order>
           <Name fontSize={fontSize}>ぶりぶり</Name>
-          <Cell fontSize={fontSize}>-40</Cell>
+          <Score fontSize={fontSize}>-40</Score>
         </Row>
       </Players>
     </Wrapper>
@@ -105,4 +105,8 @@ const Name = styled(Cell)`
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: left;
+`;
+
+const Score = styled(Cell)`
+  margin-right: 10px;
 `;

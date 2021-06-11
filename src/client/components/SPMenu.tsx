@@ -24,6 +24,7 @@ type Props = {
 
 const SPMenu: React.FC<Props> = ({ open, onClose }) => {
   const [, openSetting] = useDialog('setting');
+  const [, openAdd] = useDialog('scoreSend');
 
   const items = useMemo(
     () => [
@@ -31,7 +32,8 @@ const SPMenu: React.FC<Props> = ({ open, onClose }) => {
         icon: <AddCircleOutline />,
         text: '追加',
         onClick: () => {
-          console.log('あほげえじ');
+          openAdd();
+          onClose();
         },
       },
       {
