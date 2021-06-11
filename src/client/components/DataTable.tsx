@@ -160,7 +160,7 @@ const StyledTable = styled(Table)`
 const DummyTh = styled(TableCell)<{ fontSize: number }>`
   background-color: ${({ theme }) => theme.palette.primary.main};
   border: none;
-  width: ${({ fontSize }) => fontSize * 2}px;
+  width: ${({ fontSize }) => fontSize * 1.2}px;
 `;
 
 type Th = {

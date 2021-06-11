@@ -42,8 +42,8 @@ export { Ranking };
 
 const Wrapper = styled.div`
   margin-left: 20px;
-  width: 400px;
-  min-width: 400px;
+  width: 340px;
+  min-width: 340px;
   ${media.lessThan('medium')`
     width: 100%;
     min-width: 100%;
