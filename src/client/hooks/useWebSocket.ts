@@ -7,9 +7,12 @@ const useWebSocket = () => {
   const dispatch = useDispatch();
   const socket = useSelector(({ socket }) => socket);
 
-  const sendMessage = useCallback((message: string) => {
-    socket.send(message);
-  }, []);
+  const sendMessage = useCallback(
+    (message: string) => {
+      socket.send(message);
+    },
+    [socket],
+  );
 
   useEffect(() => {
     socket.onopen = () => {
