@@ -12,8 +12,11 @@ import { media } from '../style/media';
 import { SPMenu } from './SPMenu';
 import { useDialog } from '../hooks/useDialog';
 import { useRegistation } from '../hooks/useRegistration';
+import { useSelector } from '../hooks/useSelector';
 
 const HeadBar: React.FC = () => {
+  const { name } = useSelector(({ user }) => user);
+
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [, openSetting] = useDialog('setting');
   const [, openAdd] = useDialog('scoreSend');
@@ -57,7 +60,7 @@ const HeadBar: React.FC = () => {
             <>
               <UserInfo>
                 <UserIcon />
-                しんにじえも
+                {name}
               </UserInfo>
               <UserInfo>+100点</UserInfo>
               <ActionButton
