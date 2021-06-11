@@ -8,6 +8,7 @@ import { theme } from '../style/theme';
 import { HeadBar } from './HeadBar';
 import { MainContents } from './MainContents';
 import { SettingDialog } from './dialogs/SettingDialog';
+import { ScoreSendDialog } from './dialogs/ScoreSendDialog';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
           <HeadBar />
           <MainContents />
           <SettingDialog />
+          <ScoreSendDialog />
         </StyledThemeProvider>
       </MaterialThemeProvider>
     </StylesProvider>

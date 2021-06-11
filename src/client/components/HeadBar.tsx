@@ -15,6 +15,7 @@ import { useDialog } from '../hooks/useDialog';
 const HeadBar: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [, openSetting] = useDialog('setting');
+  const [, openAdd] = useDialog('addOrEdit');
 
   const handleDrawerOpen = useCallback(() => {
     setDrawerOpen(true);
@@ -43,7 +44,7 @@ const HeadBar: React.FC = () => {
             しんにじえも
           </UserInfo>
           <UserInfo>+100点</UserInfo>
-          <ActionButton color="inherit" variant="outlined">
+          <ActionButton color="inherit" variant="outlined" onClick={openAdd}>
             追加
           </ActionButton>
           <ActionButton color="inherit" variant="outlined">

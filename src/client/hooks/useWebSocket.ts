@@ -1,11 +1,11 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { app } from '../modules/app';
-
-const socket = new WebSocket(WEBSOCKET_ORIGIN);
+import { useSelector } from './useSelector';
 
 const useWebSocket = () => {
   const dispatch = useDispatch();
+  const socket = useSelector(({ socket }) => socket);
 
   const sendMessage = useCallback((message: string) => {
     socket.send(message);
@@ -17,10 +17,10 @@ const useWebSocket = () => {
     };
     socket.onmessage = (event: MessageEvent<string>) => {
       dispatch(app.actions.setComment(event.data));
+      alert(event.data); // eslint-disable-line no-alert
     };
     socket.onclose = () => {
       console.log('閉じます');
-      document.location.reload();
     };
   }, [socket]);
 

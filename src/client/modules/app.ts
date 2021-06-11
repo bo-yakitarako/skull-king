@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import ReconnectingWebSocket from 'reconnecting-websocket';
 
 const setting: { fontSize: number; cellWidth: number } = localStorage.setting
   ? JSON.parse(localStorage.setting)
@@ -12,8 +13,14 @@ const setting: { fontSize: number; cellWidth: number } = localStorage.setting
 const initialState = {
   comment: '',
   setting,
+  socket: new ReconnectingWebSocket(WEBSOCKET_ORIGIN, undefined, {
+    maxReconnectionDelay: 4000,
+    minReconnectionDelay: 1000,
+    connectionTimeout: 1500,
+  }),
   dialog: {
     setting: false,
+    scoreSend: false,
   },
 };
 
