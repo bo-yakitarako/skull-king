@@ -49,6 +49,7 @@ const Wrapper = styled.div`
     min-width: 100%;
     margin-left: 0;
     margin-top: 20px;
+    margin-bottom: 70px;
   `}
 `;
 

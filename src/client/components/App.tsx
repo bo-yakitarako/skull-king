@@ -9,6 +9,7 @@ import { HeadBar } from './HeadBar';
 import { MainContents } from './MainContents';
 import { SettingDialog } from './dialogs/SettingDialog';
 import { ScoreSendDialog } from './dialogs/ScoreSendDialog';
+import { AddButton } from './AddButton';
 
 const App: React.FC = () => {
   return (
@@ -19,6 +20,7 @@ const App: React.FC = () => {
           <MainContents />
           <SettingDialog />
           <ScoreSendDialog />
+          <AddButton />
         </StyledThemeProvider>
       </MaterialThemeProvider>
     </StylesProvider>

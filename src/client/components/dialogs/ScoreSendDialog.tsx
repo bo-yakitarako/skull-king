@@ -30,6 +30,7 @@ const ScoreSendDialog: React.FC = () => {
             value={message}
             onChange={(event) => setFormMessage(event.target.value)}
             variant="standard"
+            autoFocus
           />
         </LayoutInput>
       </DialogContent>
