@@ -64,6 +64,7 @@ const app = createSlice({
         return;
       }
       const { userId: id, userName: name } = payload;
+      localStorage.userName = name;
       state.user = { id, name };
     });
   },

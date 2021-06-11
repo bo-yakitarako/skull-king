@@ -1,5 +1,12 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
+import { app } from '../modules/app';
 import { post } from '../modules/http';
+import { Store } from '../modules/store';
+
+type Thunk = {
+  dispatch: Dispatch;
+  state: Store;
+};
 
 type Register = {
   userId: number;
@@ -15,10 +22,24 @@ const register = createAsyncThunk<Register | null, string>(
       });
       return { userId, userName };
     } catch {
-      console.log('失敗しちゃったぁ');
       return null;
     }
   },
 );
 
-export { register };
+const checkRegistration = createAsyncThunk<void, void, Thunk>(
+  'checkRegistration',
+  async (v, { dispatch, getState }) => {
+    const { user } = getState();
+    const userName = user.name;
+    const { userId } = await post<{ userId: number | null }>(
+      '/api/checkRegistration',
+      { userName },
+    );
+    if (userId) {
+      dispatch(app.actions.setUser({ ...user, id: userId }));
+    }
+  },
+);
+
+export { register, checkRegistration };
