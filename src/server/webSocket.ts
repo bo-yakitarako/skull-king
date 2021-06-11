@@ -8,12 +8,8 @@ server.on('connection', (webSocket) => {
   });
 
   webSocket.on('message', (message) => {
-    console.log(`「${message}」と受け取ったわ！`);
-
-    console.log(message);
-
     server.clients.forEach((client) => {
-      client.send(`「${message}」を送っちゃうよ！`);
+      client.send(message);
     });
   });
 

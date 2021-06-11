@@ -1,5 +1,8 @@
+import { config } from 'dotenv';
 import express from 'express';
 import './webSocket';
+
+config();
 
 const app = express();
 
@@ -11,6 +14,7 @@ app.get('/', (req, res) => {
   res.sendFile(`${PUBLIC_ROOT}/index.html`);
 });
 
-app.listen(8080, () => {
-  console.log('8080をlistenします！');
+const SERVER_PORT = parseInt(process.env.SERVER_PORT as string, 10);
+app.listen(SERVER_PORT, () => {
+  console.log(`${SERVER_PORT}をlistenします！`);
 });
