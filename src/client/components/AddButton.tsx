@@ -3,15 +3,21 @@ import { Add } from '@material-ui/icons';
 import React from 'react';
 import styled from 'styled-components';
 import { useDialog } from '../hooks/useDialog';
+import { useRegistation } from '../hooks/useRegistration';
 
 const AddButton: React.FC = () => {
   const [, openDialog] = useDialog('scoreSend');
+  const [registered] = useRegistation();
   return (
-    <ButtonLayout>
-      <Fab color="secondary" onClick={openDialog}>
-        <Add />
-      </Fab>
-    </ButtonLayout>
+    <>
+      {registered && (
+        <ButtonLayout>
+          <Fab color="secondary" onClick={openDialog}>
+            <Add />
+          </Fab>
+        </ButtonLayout>
+      )}
+    </>
   );
 };
 

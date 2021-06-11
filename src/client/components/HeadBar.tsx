@@ -11,11 +11,15 @@ import { AccountCircle, Menu, Settings } from '@material-ui/icons';
 import { media } from '../style/media';
 import { SPMenu } from './SPMenu';
 import { useDialog } from '../hooks/useDialog';
+import { useRegistation } from '../hooks/useRegistration';
 
 const HeadBar: React.FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [, openSetting] = useDialog('setting');
   const [, openAdd] = useDialog('scoreSend');
+  const [, openRegistration] = useDialog('registration');
+
+  const [registered] = useRegistation();
 
   const handleDrawerOpen = useCallback(() => {
     setDrawerOpen(true);
@@ -36,17 +40,43 @@ const HeadBar: React.FC = () => {
         </LayoutSP>
         <Title variant="h6">Skull Kingは神ゲー</Title>
         <LayoutSP>
-          <UserInfo>+100点</UserInfo>
+          {registered ? (
+            <UserInfo>+100点</UserInfo>
+          ) : (
+            <Button
+              color="inherit"
+              variant="outlined"
+              onClick={openRegistration}
+            >
+              登録
+            </Button>
+          )}
         </LayoutSP>
         <LayoutPC>
-          <UserInfo>
-            <UserIcon />
-            しんにじえも
-          </UserInfo>
-          <UserInfo>+100点</UserInfo>
-          <ActionButton color="inherit" variant="outlined" onClick={openAdd}>
-            追加
-          </ActionButton>
+          {registered ? (
+            <>
+              <UserInfo>
+                <UserIcon />
+                しんにじえも
+              </UserInfo>
+              <UserInfo>+100点</UserInfo>
+              <ActionButton
+                color="inherit"
+                variant="outlined"
+                onClick={openAdd}
+              >
+                追加
+              </ActionButton>
+            </>
+          ) : (
+            <ActionButton
+              color="inherit"
+              variant="outlined"
+              onClick={openRegistration}
+            >
+              登録
+            </ActionButton>
+          )}
           <ActionButton color="inherit" variant="outlined">
             リセット
           </ActionButton>

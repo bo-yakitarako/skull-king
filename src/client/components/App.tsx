@@ -10,6 +10,7 @@ import { MainContents } from './MainContents';
 import { SettingDialog } from './dialogs/SettingDialog';
 import { ScoreSendDialog } from './dialogs/ScoreSendDialog';
 import { AddButton } from './AddButton';
+import { RegistrationDialog } from './dialogs/RegistrationDialog';
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
           <MainContents />
           <SettingDialog />
           <ScoreSendDialog />
+          <RegistrationDialog />
           <AddButton />
         </StyledThemeProvider>
       </MaterialThemeProvider>

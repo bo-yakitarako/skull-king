@@ -2,6 +2,7 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import ReconnectingWebSocket from 'reconnecting-websocket';
+import { register } from '../actions/app';
 
 const setting: { fontSize: number; cellWidth: number } = localStorage.setting
   ? JSON.parse(localStorage.setting)
@@ -10,7 +11,13 @@ const setting: { fontSize: number; cellWidth: number } = localStorage.setting
       cellWidth: 80,
     };
 
+const userName: string = localStorage.userName || '';
+
 const initialState = {
+  user: {
+    id: 0,
+    name: userName,
+  },
   comment: '',
   setting,
   socket: new ReconnectingWebSocket(WEBSOCKET_ORIGIN, undefined, {
@@ -19,10 +26,13 @@ const initialState = {
     connectionTimeout: 1500,
   }),
   dialog: {
+    registration: false,
     setting: false,
     scoreSend: false,
   },
 };
+
+type User = typeof initialState.user;
 
 type DialogType = keyof typeof initialState.dialog;
 
@@ -36,6 +46,9 @@ const app = createSlice({
   name: 'template',
   initialState,
   reducers: {
+    setUser: (state, { payload }: PayloadAction<User>) => {
+      state.user = payload;
+    },
     setComment: (state, { payload }: PayloadAction<string>) => {
       state.comment = payload;
     },
@@ -50,6 +63,15 @@ const app = createSlice({
       state.setting[target] = value;
       localStorage.setting = JSON.stringify(state.setting);
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(register.fulfilled, (state, { payload }) => {
+      if (payload === null) {
+        return;
+      }
+      const { userId: id, userName: name } = payload;
+      state.user = { id, name };
+    });
   },
 });
 

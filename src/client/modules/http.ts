@@ -12,19 +12,19 @@ const axios = axiosBase.create({
   responseType: 'json',
 });
 
-async function get<Res, Req>(path: string, params = {} as Req) {
-  const { data } = await axios.get<Res>(path, {
-    method: 'get',
-    params,
-  });
+async function get<Res = string, Req = unknown>(
+  path: string,
+  params = {} as Req,
+) {
+  const { data } = await axios.get<Res>(path, params);
   return data;
 }
 
-async function post<Res, Req>(path: string, params = {} as Req) {
-  const { data } = await axios.post<Res>(path, {
-    method: 'post',
-    params,
-  });
+async function post<Res = string, Req = unknown>(
+  path: string,
+  params = {} as Req,
+) {
+  const { data } = await axios.post<Res>(path, params);
   return data;
 }
 
