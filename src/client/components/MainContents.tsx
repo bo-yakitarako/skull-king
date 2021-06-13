@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { CircularProgress, Typography } from '@material-ui/core';
 import { useShallowEqualSelector } from '../hooks/useShallowEqualSelector';
 import { media } from '../style/media';
-import { DataTable } from './DataTable';
+import { DataTable } from './dataTable/DataTable';
 import { Ranking } from './Ranking';
 
 const MainContents: React.FC = () => {
