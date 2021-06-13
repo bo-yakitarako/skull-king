@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import { WebSocketType } from '../../webSocketType';
 import { app } from '../modules/app';
+import { useSelector } from './useSelector';
 
 const socket = new ReconnectingWebSocket(WEBSOCKET_ORIGIN, undefined, {
   maxReconnectionDelay: 4000,
@@ -12,6 +13,8 @@ const socket = new ReconnectingWebSocket(WEBSOCKET_ORIGIN, undefined, {
 
 const useWebSocket = () => {
   const dispatch = useDispatch();
+
+  const fetched = useSelector(({ fetched }) => fetched);
 
   const sendMessage = useCallback(
     (request: WebSocketType) => {
@@ -27,11 +30,15 @@ const useWebSocket = () => {
     };
     socket.onmessage = (event: MessageEvent<string>) => {
       dispatch(app.actions.setData(JSON.parse(event.data)));
+      if (!fetched) {
+        dispatch(app.actions.fetched());
+      }
     };
     socket.onclose = () => {
       console.log('閉じます');
+      dispatch(app.actions.fetching());
     };
-  }, [socket]);
+  }, [socket, fetched]);
 
   return { sendMessage };
 };

@@ -32,6 +32,7 @@ const initialState = {
     resetAll: false,
   },
   editIndex: -1,
+  fetched: false,
 };
 
 type User = typeof initialState.user;
@@ -78,6 +79,12 @@ const app = createSlice({
         localStorage.removeItem('userName');
       }
       state.data = payload;
+    },
+    fetched: (state) => {
+      state.fetched = true;
+    },
+    fetching: (state) => {
+      state.fetched = false;
     },
   },
 });
