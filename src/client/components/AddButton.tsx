@@ -4,13 +4,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDialog } from '../hooks/useDialog';
 import { useRegistation } from '../hooks/useRegistration';
+import { useScoreEdit } from '../hooks/useScoreEdit';
 
 const AddButton: React.FC = () => {
   const [, openDialog] = useDialog('scoreSend');
   const [registered] = useRegistation();
+  const { canAddScore } = useScoreEdit();
   return (
     <>
-      {registered && (
+      {registered && canAddScore && (
         <ButtonLayout>
           <Fab color="secondary" onClick={openDialog}>
             <Add />

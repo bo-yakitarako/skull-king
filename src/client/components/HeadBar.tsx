@@ -14,6 +14,7 @@ import { useDialog } from '../hooks/useDialog';
 import { useRegistation } from '../hooks/useRegistration';
 import { useOwnData } from '../hooks/useOwnData';
 import { useShallowEqualSelector } from '../hooks/useShallowEqualSelector';
+import { useScoreEdit } from '../hooks/useScoreEdit';
 
 const HeadBar: React.FC = () => {
   const { name, isExistsUser } = useShallowEqualSelector(({ user, data }) => ({
@@ -29,6 +30,7 @@ const HeadBar: React.FC = () => {
 
   const [registered] = useRegistation();
   const { ownScores } = useOwnData();
+  const { canAddScore } = useScoreEdit();
 
   const score = useMemo(() => {
     if (typeof ownScores === 'undefined') {
@@ -81,13 +83,15 @@ const HeadBar: React.FC = () => {
                 {name}
               </UserInfo>
               <UserInfo>{score}</UserInfo>
-              <ActionButton
-                color="inherit"
-                variant="outlined"
-                onClick={openAdd}
-              >
-                追加
-              </ActionButton>
+              {canAddScore && (
+                <ActionButton
+                  color="inherit"
+                  variant="outlined"
+                  onClick={openAdd}
+                >
+                  追加
+                </ActionButton>
+              )}
             </>
           ) : (
             <ActionButton

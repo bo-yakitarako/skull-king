@@ -18,6 +18,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { useDialog } from '../hooks/useDialog';
 import { useRegistation } from '../hooks/useRegistration';
+import { useScoreEdit } from '../hooks/useScoreEdit';
 import { useShallowEqualSelector } from '../hooks/useShallowEqualSelector';
 
 type Props = {
@@ -37,6 +38,7 @@ const SPMenu: React.FC<Props> = ({ open, onClose }) => {
   const [, openReset] = useDialog('reset');
 
   const [registered] = useRegistation();
+  const { canAddScore } = useScoreEdit();
 
   const items = useMemo(
     () => [
@@ -47,7 +49,7 @@ const SPMenu: React.FC<Props> = ({ open, onClose }) => {
           openAdd();
           onClose();
         },
-        view: registered,
+        view: registered && canAddScore,
       },
       {
         icon: <Refresh />,
@@ -68,7 +70,7 @@ const SPMenu: React.FC<Props> = ({ open, onClose }) => {
         view: true,
       },
     ],
-    [registered, isExistsUser],
+    [registered, isExistsUser, canAddScore],
   );
 
   return (
