@@ -14,6 +14,14 @@ type RegisterName = {
   };
 };
 
-type WebSocketType = EditScore | RegisterName;
+type ResetScores = {
+  type: 'RESET_SCORES';
+};
 
-export { EditScore, RegisterName, WebSocketType };
+type ResetAll = {
+  type: 'RESET_ALL';
+};
+
+type WebSocketType = EditScore | RegisterName | ResetScores | ResetAll;
+
+export { EditScore, RegisterName, ResetScores, ResetAll, WebSocketType };

@@ -1,7 +1,7 @@
 import { Server } from 'ws';
 import { WebSocketType } from '../webSocketType';
 import { getData } from './api';
-import { editScore, registerName } from './webSocketAPI';
+import { editScore, registerName, resetAll, resetScores } from './webSocketAPI';
 
 const server = new Server({ port: 5001 });
 
@@ -19,6 +19,12 @@ server.on('connection', (webSocket) => {
         break;
       case 'REGISTER_NAME':
         responseData = await registerName(request.payload);
+        break;
+      case 'RESET_SCORES':
+        responseData = await resetScores();
+        break;
+      case 'RESET_ALL':
+        responseData = await resetAll();
         break;
       default:
         responseData = JSON.stringify(await getData());

@@ -13,6 +13,7 @@ import { ScoreSendDialog } from './dialogs/ScoreSendDialog';
 import { AddButton } from './AddButton';
 import { RegistrationDialog } from './dialogs/RegistrationDialog';
 import { fetchData } from '../actions/app';
+import { ResetDialog } from './dialogs/ResetDialog';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const App: React.FC = () => {
           <SettingDialog />
           <ScoreSendDialog />
           <RegistrationDialog />
+          <ResetDialog />
           <AddButton />
         </StyledThemeProvider>
       </MaterialThemeProvider>

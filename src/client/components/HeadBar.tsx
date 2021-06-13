@@ -22,6 +22,7 @@ const HeadBar: React.FC = () => {
   const [, openSetting] = useDialog('setting');
   const [, openAdd] = useDialog('scoreSend');
   const [, openRegistration] = useDialog('registration');
+  const [, openReset] = useDialog('reset');
 
   const [registered] = useRegistation();
   const { ownScores } = useOwnData();
@@ -94,7 +95,7 @@ const HeadBar: React.FC = () => {
               登録
             </ActionButton>
           )}
-          <ActionButton color="inherit" variant="outlined">
+          <ActionButton color="inherit" variant="outlined" onClick={openReset}>
             リセット
           </ActionButton>
           <IconButton color="inherit" onClick={openSetting}>

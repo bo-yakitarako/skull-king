@@ -18,7 +18,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { useDialog } from '../hooks/useDialog';
 import { useRegistation } from '../hooks/useRegistration';
-import { useSelector } from '../hooks/useSelector';
+import { useShallowEqualSelector } from '../hooks/useShallowEqualSelector';
 
 type Props = {
   open: boolean;
@@ -26,11 +26,15 @@ type Props = {
 };
 
 const SPMenu: React.FC<Props> = ({ open, onClose }) => {
-  const { name } = useSelector(({ user }) => user);
+  const { name, isExistsUser } = useShallowEqualSelector(({ user, data }) => ({
+    name: user.name,
+    isExistsUser: data.length > 0,
+  }));
 
   const [, openSetting] = useDialog('setting');
   const [, openAdd] = useDialog('scoreSend');
   const [, openRegistration] = useDialog('registration');
+  const [, openReset] = useDialog('reset');
 
   const [registered] = useRegistation();
 
@@ -49,9 +53,10 @@ const SPMenu: React.FC<Props> = ({ open, onClose }) => {
         icon: <Refresh />,
         text: 'リセット',
         onClick: () => {
-          console.log('ちんちん');
+          openReset();
+          onClose();
         },
-        view: true,
+        view: isExistsUser,
       },
       {
         icon: <Settings />,

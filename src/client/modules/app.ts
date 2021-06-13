@@ -29,6 +29,7 @@ const initialState = {
     registration: false,
     setting: false,
     scoreSend: false,
+    reset: false,
   },
   editIndex: -1,
 };
@@ -71,6 +72,10 @@ const app = createSlice({
       const user = payload.find(({ userName }) => userName === state.user.name);
       if (typeof user !== 'undefined') {
         state.user.id = user.userId;
+      }
+      if (payload.length === 0 && state.user.id > 0) {
+        state.user = { id: 0, name: '' };
+        localStorage.removeItem('userName');
       }
       state.data = payload;
     },

@@ -1,7 +1,8 @@
 import { EditScore, RegisterName } from '../webSocketType';
 import { getData, register } from './api';
 import { Scores } from './entity/Scores';
-import { findOne, save } from './utility';
+import { Users } from './entity/Users';
+import { connect, findOne, save } from './utility';
 
 const editScore = async ({
   userId,
@@ -23,4 +24,15 @@ const registerName = async ({ userName }: RegisterName['payload']) => {
   return JSON.stringify(await getData());
 };
 
-export { editScore, registerName };
+const resetScores = async () => {
+  await connect(Scores, (repository) => repository.delete({}));
+  return JSON.stringify(await getData());
+};
+
+const resetAll = async () => {
+  await connect(Scores, (repository) => repository.delete({}));
+  await connect(Users, (repository) => repository.delete({}));
+  return '[]';
+};
+
+export { editScore, registerName, resetScores, resetAll };
