@@ -6,13 +6,25 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useDataTable } from '../hooks/useDataTable';
+import { useDialog } from '../hooks/useDialog';
 import { useShallowEqualSelector } from '../hooks/useShallowEqualSelector';
+import { app } from '../modules/app';
 import { media } from '../style/media';
 
+type NumberColumn = {
+  head?: boolean;
+  userIndex?: number;
+  battleIndex?: number;
+};
+
 const DataTable: React.FC = () => {
+  const dispatch = useDispatch();
+  const [, openScoreDialog] = useDialog('scoreSend');
+
   const { fontSize, cellWidth, ownUserId } = useShallowEqualSelector(
     ({ setting, user }) => ({
       ...setting,
@@ -21,6 +33,10 @@ const DataTable: React.FC = () => {
   );
 
   const { headerUsers, scoreDatas } = useDataTable();
+
+  const ownDataIndex = useMemo(() => {
+    return headerUsers.findIndex(({ userId }) => userId === ownUserId);
+  }, [headerUsers, ownUserId]);
 
   const Th: React.FC<Th> = useCallback(
     ({ children, loginuser }) => (
@@ -31,13 +47,35 @@ const DataTable: React.FC = () => {
     [fontSize, cellWidth],
   );
 
-  const Td: React.FC<{ head?: boolean }> = useCallback(
-    ({ children, head }) => (
-      <StyledTd align={head ? 'right' : 'left'} fontSize={fontSize}>
-        {children}
-      </StyledTd>
-    ),
-    [fontSize, cellWidth],
+  const Td: React.FC<NumberColumn> = useCallback(
+    ({ children, head, userIndex, battleIndex }) => {
+      const inputed =
+        ownDataIndex > 0 &&
+        typeof battleIndex !== 'undefined' &&
+        scoreDatas[battleIndex][ownDataIndex] !== '-';
+
+      const own = userIndex === ownDataIndex && inputed;
+
+      const handleClick = () => {
+        if (!own || typeof battleIndex === 'undefined') {
+          return;
+        }
+        dispatch(app.actions.setEditIndex(battleIndex));
+        openScoreDialog();
+      };
+
+      return (
+        <StyledTd
+          align={head ? 'right' : 'left'}
+          fontSize={fontSize}
+          own={own ? 'true' : 'false'}
+          onClick={handleClick}
+        >
+          {children}
+        </StyledTd>
+      );
+    },
+    [fontSize, ownUserId, headerUsers],
   );
 
   return (
@@ -61,8 +99,14 @@ const DataTable: React.FC = () => {
           {scoreDatas.map((datas, index) => (
             <BodyRow key={`${index}`}>
               <Td head>{index + 1}</Td>
-              {datas.map((score, deepIndex) => (
-                <Td key={`${score}${deepIndex}`}>{score}</Td>
+              {datas.map((score, userIndex) => (
+                <Td
+                  key={`${score}${userIndex}`}
+                  userIndex={userIndex}
+                  battleIndex={index}
+                >
+                  {score}
+                </Td>
               ))}
             </BodyRow>
           ))}
@@ -139,6 +183,9 @@ const BodyRow = styled(TableRow)`
   }
 `;
 
-const StyledTd = styled(TableCell)<{ fontSize: number }>`
+const StyledTd = styled(TableCell)<{ fontSize: number; own: 'true' | 'false' }>`
   font-size: ${({ fontSize }) => fontSize}px;
+  &:hover {
+    cursor: ${({ own }) => (own === 'true' ? 'pointer' : 'defalut')};
+  }
 `;

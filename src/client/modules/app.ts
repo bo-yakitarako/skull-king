@@ -22,7 +22,6 @@ const initialState = {
     id: 0,
     name: userName,
   },
-  comment: '',
   data: initialData,
   setting,
   dialog: {
@@ -30,6 +29,7 @@ const initialState = {
     setting: false,
     scoreSend: false,
   },
+  editIndex: -1,
 };
 
 type User = typeof initialState.user;
@@ -50,9 +50,6 @@ const app = createSlice({
     setUser: (state, { payload }: PayloadAction<User>) => {
       state.user = payload;
     },
-    setComment: (state, { payload }: PayloadAction<string>) => {
-      state.comment = payload;
-    },
     openDialog: (state, { payload }: PayloadAction<DialogType>) => {
       state.dialog[payload] = true;
     },
@@ -63,6 +60,9 @@ const app = createSlice({
       const { target, value } = payload;
       state.setting[target] = value;
       localStorage.setting = JSON.stringify(state.setting);
+    },
+    setEditIndex: (state, { payload }: PayloadAction<number>) => {
+      state.editIndex = payload;
     },
   },
   extraReducers: (builder) => {
