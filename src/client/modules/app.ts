@@ -2,12 +2,26 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const setting: { fontSize: number; cellWidth: number } = localStorage.setting
-  ? JSON.parse(localStorage.setting)
+type Setting = {
+  fontSize: number;
+  cellWidth: number;
+  rankingWidth: number;
+};
+
+const setting = localStorage.setting
+  ? (JSON.parse(localStorage.setting) as Setting)
   : {
       fontSize: 16,
       cellWidth: 80,
+      rankingWidth: 370,
     };
+console.log(setting);
+
+if (!Object.keys(setting).includes('rankingWidth')) {
+  setting.rankingWidth = 370;
+}
+
+console.log(setting);
 
 const userName: string = localStorage.userName || '';
 
@@ -39,9 +53,8 @@ type User = typeof initialState.user;
 
 type DialogType = keyof typeof initialState.dialog;
 
-type Setting = keyof typeof initialState.setting;
 type SettingPayload = {
-  target: Setting;
+  target: keyof Setting;
   value: number;
 };
 

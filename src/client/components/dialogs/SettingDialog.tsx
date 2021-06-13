@@ -13,6 +13,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDialog } from '../../hooks/useDialog';
 import { useSetting } from '../../hooks/useSetting';
+import { media } from '../../style/media';
 
 const SettingDialog: React.FC = () => {
   const [open, , handleClose] = useDialog('setting');
@@ -22,6 +23,13 @@ const SettingDialog: React.FC = () => {
 
   const [cellWidth, onCellWidthChange, cellIncrement, cellDecrement] =
     useSetting('cellWidth', 10);
+
+  const [
+    rankingWidth,
+    onRankingWidthChange,
+    rankingIncrement,
+    rankingDecrement,
+  ] = useSetting('rankingWidth', 10);
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -60,6 +68,21 @@ const SettingDialog: React.FC = () => {
             <AddCircleOutline />
           </IconButton>
         </LayoutInput>
+        <LayoutInputOnlyPC>
+          <IconButton onClick={rankingDecrement}>
+            <RemoveCircleOutline />
+          </IconButton>
+          <TextField
+            variant="outlined"
+            label="ランキングの幅"
+            size="small"
+            onChange={onRankingWidthChange}
+            value={rankingWidth}
+          />
+          <IconButton onClick={rankingIncrement}>
+            <AddCircleOutline />
+          </IconButton>
+        </LayoutInputOnlyPC>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
@@ -77,4 +100,10 @@ const LayoutInput = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 10px;
+`;
+
+const LayoutInputOnlyPC = styled(LayoutInput)`
+  ${media.lessThan('medium')`
+    display: none;
+  `}
 `;

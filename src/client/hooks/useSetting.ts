@@ -5,7 +5,7 @@ import { useSelector } from './useSelector';
 
 const { setSetting } = app.actions;
 
-const useSetting = (target: Setting, amount = 1) => {
+const useSetting = (target: keyof Setting, amount = 1) => {
   const dispatch = useDispatch();
 
   const currentValue = useSelector(({ setting }) => setting[target]);

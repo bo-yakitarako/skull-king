@@ -6,15 +6,18 @@ import { media } from '../style/media';
 import { useRanking } from '../hooks/useRanking';
 
 const Ranking: React.FC = () => {
-  const { fontSize, ownId } = useShallowEqualSelector(({ setting, user }) => ({
-    fontSize: setting.fontSize,
-    ownId: user.id,
-  }));
+  const { fontSize, rankingWidth, ownId } = useShallowEqualSelector(
+    ({ setting, user }) => ({
+      fontSize: setting.fontSize,
+      rankingWidth: setting.rankingWidth,
+      ownId: user.id,
+    }),
+  );
 
   const users = useRanking();
 
   return (
-    <Wrapper>
+    <Wrapper rankingWidth={rankingWidth}>
       <Head>
         <HeadText fontSize={fontSize}>ランキング</HeadText>
       </Head>
@@ -42,10 +45,10 @@ const Ranking: React.FC = () => {
 
 export { Ranking };
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ rankingWidth: number }>`
   margin-left: 20px;
-  width: 340px;
-  min-width: 340px;
+  width: ${({ rankingWidth }) => rankingWidth}px;
+  min-width: ${({ rankingWidth }) => rankingWidth}px;
   ${media.lessThan('medium')`
     width: 100%;
     min-width: 100%;
