@@ -23,6 +23,7 @@ const useWebSocket = () => {
   useEffect(() => {
     socket.onopen = () => {
       console.log('WebSocketサーバーと接続成功！');
+      sendMessage({ type: 'INITIALIZE' });
     };
     socket.onmessage = (event: MessageEvent<string>) => {
       dispatch(app.actions.setData(JSON.parse(event.data)));

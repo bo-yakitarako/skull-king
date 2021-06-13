@@ -22,6 +22,10 @@ type ResetAll = {
   type: 'RESET_ALL';
 };
 
-type WebSocketType = EditScore | RegisterName | ResetScores | ResetAll;
+type Init = {
+  type: 'INITIALIZE';
+};
+
+type WebSocketType = EditScore | RegisterName | ResetScores | ResetAll | Init;
 
 export { EditScore, RegisterName, ResetScores, ResetAll, WebSocketType };

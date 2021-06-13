@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchData, register } from '../actions/app';
 
 const setting: { fontSize: number; cellWidth: number } = localStorage.setting
   ? JSON.parse(localStorage.setting)
@@ -79,23 +78,6 @@ const app = createSlice({
       }
       state.data = payload;
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(register.fulfilled, (state, { payload }) => {
-      if (payload === null) {
-        return;
-      }
-      const { userId: id, userName: name } = payload;
-      localStorage.userName = name;
-      state.user = { id, name };
-    });
-    builder.addCase(fetchData.fulfilled, (state, { payload }) => {
-      const user = payload.find(({ userName }) => userName === state.user.name);
-      if (typeof user !== 'undefined') {
-        state.user.id = user.userId;
-      }
-      state.data = payload;
-    });
   },
 });
 

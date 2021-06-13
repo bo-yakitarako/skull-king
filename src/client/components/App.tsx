@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import {
   StylesProvider,
   ThemeProvider as MaterialThemeProvider,
@@ -12,16 +11,9 @@ import { SettingDialog } from './dialogs/SettingDialog';
 import { ScoreSendDialog } from './dialogs/ScoreSendDialog';
 import { AddButton } from './AddButton';
 import { RegistrationDialog } from './dialogs/RegistrationDialog';
-import { fetchData } from '../actions/app';
 import { ResetDialog } from './dialogs/ResetDialog';
 
 const App: React.FC = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchData());
-  }, []);
-
   return (
     <StylesProvider injectFirst>
       <MaterialThemeProvider theme={theme}>
