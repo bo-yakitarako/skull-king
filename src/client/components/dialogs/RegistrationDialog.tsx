@@ -44,7 +44,7 @@ const RegistrationDialog: React.FC = () => {
         />
       </DialogContent>
       <DialogActions>
-        <Button color="primary" onClick={handlePost}>
+        <Button color="primary" onClick={handlePost} disabled={formName === ''}>
           送信
         </Button>
       </DialogActions>
