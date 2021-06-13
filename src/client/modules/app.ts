@@ -15,13 +15,10 @@ const setting = localStorage.setting
       cellWidth: 80,
       rankingWidth: 370,
     };
-console.log(setting);
 
 if (!Object.keys(setting).includes('rankingWidth')) {
   setting.rankingWidth = 370;
 }
-
-console.log(setting);
 
 const userName: string = localStorage.userName || '';
 
