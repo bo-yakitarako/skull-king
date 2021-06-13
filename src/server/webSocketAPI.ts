@@ -12,8 +12,9 @@ const editScore = async ({
   if (typeof scoreData !== 'undefined') {
     scoreData.score = score;
     await save(Scores, scoreData);
+  } else {
+    await save(Scores, { userId, battleIndex, score });
   }
-  await save(Scores, { userId, battleIndex, score });
   return JSON.stringify(await getData());
 };
 
