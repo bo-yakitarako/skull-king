@@ -68,7 +68,7 @@ const SPMenu: React.FC<Props> = ({ open, onClose }) => {
         view: true,
       },
     ],
-    [registered],
+    [registered, isExistsUser],
   );
 
   return (

@@ -12,6 +12,7 @@ import { ScoreSendDialog } from './dialogs/ScoreSendDialog';
 import { AddButton } from './AddButton';
 import { RegistrationDialog } from './dialogs/RegistrationDialog';
 import { ResetDialog } from './dialogs/ResetDialog';
+import { ResetAllDialog } from './dialogs/ResetAllDialog';
 
 const App: React.FC = () => {
   return (
@@ -24,6 +25,7 @@ const App: React.FC = () => {
           <ScoreSendDialog />
           <RegistrationDialog />
           <ResetDialog />
+          <ResetAllDialog />
           <AddButton />
         </StyledThemeProvider>
       </MaterialThemeProvider>

@@ -12,6 +12,7 @@ import { useDialog } from '../../hooks/useDialog';
 import { useWebSocket } from '../../hooks/useWebSocket';
 
 const ResetDialog: React.FC = () => {
+  const [, openResetAll] = useDialog('resetAll');
   const [open, , closeDialog] = useDialog('reset');
 
   const { sendMessage } = useWebSocket();
@@ -22,11 +23,8 @@ const ResetDialog: React.FC = () => {
   }, [sendMessage]);
 
   const resetAll = useCallback(() => {
-    // eslint-disable-next-line no-alert
-    if (window.confirm('本当に全部消しちゃう？')) {
-      sendMessage({ type: 'RESET_ALL' });
-    }
     closeDialog();
+    openResetAll();
   }, [sendMessage]);
 
   return (

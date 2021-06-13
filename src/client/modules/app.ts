@@ -29,6 +29,7 @@ const initialState = {
     setting: false,
     scoreSend: false,
     reset: false,
+    resetAll: false,
   },
   editIndex: -1,
 };

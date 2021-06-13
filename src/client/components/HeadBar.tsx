@@ -12,11 +12,14 @@ import { media } from '../style/media';
 import { SPMenu } from './SPMenu';
 import { useDialog } from '../hooks/useDialog';
 import { useRegistation } from '../hooks/useRegistration';
-import { useSelector } from '../hooks/useSelector';
 import { useOwnData } from '../hooks/useOwnData';
+import { useShallowEqualSelector } from '../hooks/useShallowEqualSelector';
 
 const HeadBar: React.FC = () => {
-  const { name } = useSelector(({ user }) => user);
+  const { name, isExistsUser } = useShallowEqualSelector(({ user, data }) => ({
+    name: user.name,
+    isExistsUser: data.length > 0,
+  }));
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [, openSetting] = useDialog('setting');
@@ -95,9 +98,15 @@ const HeadBar: React.FC = () => {
               登録
             </ActionButton>
           )}
-          <ActionButton color="inherit" variant="outlined" onClick={openReset}>
-            リセット
-          </ActionButton>
+          {isExistsUser && (
+            <ActionButton
+              color="inherit"
+              variant="outlined"
+              onClick={openReset}
+            >
+              リセット
+            </ActionButton>
+          )}
           <IconButton color="inherit" onClick={openSetting}>
             <Settings />
           </IconButton>
