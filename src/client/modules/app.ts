@@ -13,11 +13,11 @@ const setting = localStorage.setting
   : {
       fontSize: 16,
       cellWidth: 80,
-      rankingWidth: 370,
+      rankingWidth: 360,
     };
 
 if (!Object.keys(setting).includes('rankingWidth')) {
-  setting.rankingWidth = 370;
+  setting.rankingWidth = 360;
 }
 
 const userName: string = localStorage.userName || '';
