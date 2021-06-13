@@ -24,15 +24,17 @@ const Td: React.FC<Props> = ({ userIndex, battleIndex, children }) => {
 
   const dispatch = useDispatch();
 
-  const { isMyIndex, nextAdditionIndex } = useShallowEqualSelector(
+  const { isMyIndex, indexToAdd } = useShallowEqualSelector(
     ({ user, data }) => {
-      const nextAdditionIndex = data[userIndex].scores.findIndex(
+      const nextBattleIndex = data[userIndex].scores.findIndex(
         (value) => value === null,
       );
+      const indexToAdd =
+        nextBattleIndex < 0 ? data[userIndex].scores.length : nextBattleIndex;
       const isMyIndex = data[userIndex].userId === user.id;
       return {
         isMyIndex,
-        nextAdditionIndex,
+        indexToAdd,
       };
     },
   );
@@ -40,19 +42,19 @@ const Td: React.FC<Props> = ({ userIndex, battleIndex, children }) => {
   const [, openScoreDialog] = useDialog('scoreSend');
 
   const canOpenEdit = useMemo(
-    () => isMyIndex && battleIndex <= nextAdditionIndex,
-    [isMyIndex, nextAdditionIndex],
+    () => isMyIndex && battleIndex <= indexToAdd,
+    [isMyIndex, indexToAdd],
   );
 
   const handleClick = useCallback(() => {
     if (!canOpenEdit) {
       return;
     }
-    if (battleIndex < nextAdditionIndex) {
+    if (battleIndex < indexToAdd) {
       dispatch(app.actions.setEditIndex(battleIndex));
     }
     openScoreDialog();
-  }, [canOpenEdit, nextAdditionIndex]);
+  }, [canOpenEdit, indexToAdd]);
 
   return (
     <StyledTd
