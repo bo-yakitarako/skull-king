@@ -18,7 +18,7 @@ const useOwnData = () => {
     if (typeof ownScores === 'undefined') {
       return 0;
     }
-    if (editIndex > 0) {
+    if (editIndex >= 0) {
       return editIndex;
     }
     const reversed = [...ownScores].reverse();

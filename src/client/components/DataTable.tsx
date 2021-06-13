@@ -49,12 +49,11 @@ const DataTable: React.FC = () => {
 
   const Td: React.FC<NumberColumn> = useCallback(
     ({ children, head, userIndex, battleIndex }) => {
-      const inputed =
-        ownDataIndex > 0 &&
+      const own =
+        ownDataIndex >= 0 &&
         typeof battleIndex !== 'undefined' &&
-        scoreDatas[battleIndex][ownDataIndex] !== '-';
-
-      const own = userIndex === ownDataIndex && inputed;
+        scoreDatas[battleIndex][ownDataIndex] !== '-' &&
+        userIndex === ownDataIndex;
 
       const handleClick = () => {
         if (!own || typeof battleIndex === 'undefined') {
@@ -96,14 +95,14 @@ const DataTable: React.FC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {scoreDatas.map((datas, index) => (
-            <BodyRow key={`${index}`}>
-              <Td head>{index + 1}</Td>
+          {scoreDatas.map((datas, battleIndex) => (
+            <BodyRow key={`${battleIndex}`}>
+              <Td head>{battleIndex + 1}</Td>
               {datas.map((score, userIndex) => (
                 <Td
                   key={`${score}${userIndex}`}
                   userIndex={userIndex}
-                  battleIndex={index}
+                  battleIndex={battleIndex}
                 >
                   {score}
                 </Td>

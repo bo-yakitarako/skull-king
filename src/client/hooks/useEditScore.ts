@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useOwnData } from './useOwnData';
 import { useSelector } from './useSelector';
 import { useWebSocket } from './useWebSocket';
@@ -6,11 +6,18 @@ import { useWebSocket } from './useWebSocket';
 const useEditScore = () => {
   const { battleIndex, ownScores } = useOwnData();
   const [score, setScore] = useState(
-    (ownScores && ownScores[battleIndex]) || 0,
+    typeof ownScores !== 'undefined' ? ownScores[battleIndex] || 0 : 0,
   );
 
   const userId = useSelector(({ user }) => user.id);
   const { sendMessage } = useWebSocket();
+
+  useEffect(() => {
+    if (typeof ownScores === 'undefined') {
+      return;
+    }
+    setScore(ownScores[battleIndex] || 0);
+  }, [ownScores, battleIndex]);
 
   const sign = useMemo(() => {
     return score > 0 ? '+' : '';
