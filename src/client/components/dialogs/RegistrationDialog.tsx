@@ -21,8 +21,10 @@ const RegistrationDialog: React.FC = () => {
   const [formName, setFormName] = useState(name);
 
   const handlePost = useCallback(() => {
-    postName(formName);
-    handleClose();
+    if (formName !== '') {
+      postName(formName);
+      handleClose();
+    }
   }, [formName]);
 
   return (
