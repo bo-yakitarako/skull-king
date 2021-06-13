@@ -40,6 +40,7 @@ const RegistrationDialog: React.FC = () => {
           autoFocus
           label="名前を入力"
           onChange={(event) => setFormName(event.target.value)}
+          value={formName}
         />
       </DialogContent>
       <DialogActions>
