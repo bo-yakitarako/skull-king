@@ -18,7 +18,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { useDialog } from '../hooks/useDialog';
 import { useRegistation } from '../hooks/useRegistration';
-import { useScoreEdit } from '../hooks/useScoreEdit';
+import { useCanAddScore } from '../hooks/useCanAddScore';
 import { useShallowEqualSelector } from '../hooks/useShallowEqualSelector';
 
 type Props = {
@@ -38,7 +38,7 @@ const SPMenu: React.FC<Props> = ({ open, onClose }) => {
   const [, openReset] = useDialog('reset');
 
   const [registered] = useRegistation();
-  const { canAddScore } = useScoreEdit();
+  const canAddScore = useCanAddScore();
 
   const items = useMemo(
     () => [

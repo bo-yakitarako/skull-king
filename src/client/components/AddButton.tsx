@@ -4,12 +4,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDialog } from '../hooks/useDialog';
 import { useRegistation } from '../hooks/useRegistration';
-import { useScoreEdit } from '../hooks/useScoreEdit';
+import { useCanAddScore } from '../hooks/useCanAddScore';
 
 const AddButton: React.FC = () => {
   const [, openDialog] = useDialog('scoreSend');
   const [registered] = useRegistation();
-  const { canAddScore } = useScoreEdit();
+  const canAddScore = useCanAddScore();
   return (
     <>
       {registered && canAddScore && (
