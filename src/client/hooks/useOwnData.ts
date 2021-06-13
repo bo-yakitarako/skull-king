@@ -11,13 +11,13 @@ const useOwnData = () => {
   );
 
   const ownScores = useMemo(() => {
-    return data.find(({ userId }) => userId === ownId)?.scores as (
-      | number
-      | null
-    )[];
+    return data.find(({ userId }) => userId === ownId)?.scores;
   }, [ownId, data]);
 
   const battleIndex = useMemo(() => {
+    if (typeof ownScores === 'undefined') {
+      return 0;
+    }
     if (editIndex > 0) {
       return editIndex;
     }
