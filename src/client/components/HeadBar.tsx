@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import {
   AppBar,
@@ -13,6 +13,7 @@ import { SPMenu } from './SPMenu';
 import { useDialog } from '../hooks/useDialog';
 import { useRegistation } from '../hooks/useRegistration';
 import { useSelector } from '../hooks/useSelector';
+import { useOwnData } from '../hooks/useOwnData';
 
 const HeadBar: React.FC = () => {
   const { name } = useSelector(({ user }) => user);
@@ -23,6 +24,19 @@ const HeadBar: React.FC = () => {
   const [, openRegistration] = useDialog('registration');
 
   const [registered] = useRegistation();
+  const { ownScores } = useOwnData();
+
+  const score = useMemo(() => {
+    if (typeof ownScores === 'undefined') {
+      return '0点';
+    }
+    const sumScore = ownScores.reduce(
+      (pre, cur) => (pre as number) + (cur || 0),
+      0,
+    ) as number;
+    const sign = sumScore > 0 ? '+' : '';
+    return `${sign}${sumScore}点`;
+  }, [ownScores]);
 
   const handleDrawerOpen = useCallback(() => {
     setDrawerOpen(true);
@@ -44,7 +58,7 @@ const HeadBar: React.FC = () => {
         <Title variant="h6">Skull Kingは神ゲー</Title>
         <LayoutSP>
           {registered ? (
-            <UserInfo>+100点</UserInfo>
+            <UserInfo>{score}</UserInfo>
           ) : (
             <Button
               color="inherit"
@@ -62,7 +76,7 @@ const HeadBar: React.FC = () => {
                 <UserIcon />
                 {name}
               </UserInfo>
-              <UserInfo>+100点</UserInfo>
+              <UserInfo>{score}</UserInfo>
               <ActionButton
                 color="inherit"
                 variant="outlined"
