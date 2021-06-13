@@ -23,7 +23,7 @@ const ScoreSendDialog: React.FC = () => {
   const [open, , closeDialog] = useDialog('scoreSend');
 
   const { battleIndex } = useOwnData();
-  const { scoreText, edit } = useEditScore();
+  const { scoreText, edit, post } = useEditScore();
 
   const handleClose = useCallback(() => {
     closeDialog();
@@ -60,7 +60,15 @@ const ScoreSendDialog: React.FC = () => {
         </LayoutInput>
       </DialogContent>
       <DialogActions>
-        <Button color="primary">送信</Button>
+        <Button
+          color="primary"
+          onClick={() => {
+            post();
+            handleClose();
+          }}
+        >
+          送信
+        </Button>
       </DialogActions>
     </Dialog>
   );

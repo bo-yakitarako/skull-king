@@ -1,7 +1,16 @@
 import { useCallback, useMemo, useState } from 'react';
+import { useOwnData } from './useOwnData';
+import { useSelector } from './useSelector';
+import { useWebSocket } from './useWebSocket';
 
 const useEditScore = () => {
-  const [score, setScore] = useState(0);
+  const { battleIndex, ownScores } = useOwnData();
+  const [score, setScore] = useState(
+    (ownScores && ownScores[battleIndex]) || 0,
+  );
+
+  const userId = useSelector(({ user }) => user.id);
+  const { sendMessage } = useWebSocket();
 
   const sign = useMemo(() => {
     return score > 0 ? '+' : '';
@@ -15,7 +24,18 @@ const useEditScore = () => {
     [],
   );
 
-  return { scoreText, edit };
+  const post = useCallback(() => {
+    sendMessage({
+      type: 'EDIT_SCORE',
+      payload: {
+        userId,
+        battleIndex,
+        score,
+      },
+    });
+  }, [score, battleIndex, userId, sendMessage]);
+
+  return { scoreText, edit, post };
 };
 
 export { useEditScore };

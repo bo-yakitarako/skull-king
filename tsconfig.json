@@ -63,6 +63,7 @@
       "src/**/*"
     ],
     "exclude": [
-      "src/client/**/*"
+      "src/client/**/*",
+      "src/webSocketType.ts"
     ]
   }

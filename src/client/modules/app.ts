@@ -12,17 +12,18 @@ const setting: { fontSize: number; cellWidth: number } = localStorage.setting
 
 const userName: string = localStorage.userName || '';
 
-const initialData = [...Array(3)].map((v, index) => {
-  const scores: (number | null)[] = [...Array(10)].map(() => null);
-  return { userId: -index, userName: '-', scores };
-});
+type Data = {
+  userId: number;
+  userName: string;
+  scores: (number | null)[];
+}[];
 
 const initialState = {
   user: {
     id: 0,
     name: userName,
   },
-  data: initialData,
+  data: [] as Data,
   setting,
   dialog: {
     registration: false,
@@ -33,7 +34,6 @@ const initialState = {
 };
 
 type User = typeof initialState.user;
-type Data = typeof initialData;
 
 type DialogType = keyof typeof initialState.dialog;
 
@@ -50,6 +50,9 @@ const app = createSlice({
     setUser: (state, { payload }: PayloadAction<User>) => {
       state.user = payload;
     },
+    setUserName: (state, { payload }: PayloadAction<string>) => {
+      state.user.name = payload;
+    },
     openDialog: (state, { payload }: PayloadAction<DialogType>) => {
       state.dialog[payload] = true;
     },
@@ -63,6 +66,13 @@ const app = createSlice({
     },
     setEditIndex: (state, { payload }: PayloadAction<number>) => {
       state.editIndex = payload;
+    },
+    setData: (state, { payload }: PayloadAction<Data>) => {
+      const user = payload.find(({ userName }) => userName === state.user.name);
+      if (typeof user !== 'undefined') {
+        state.user.id = user.userId;
+      }
+      state.data = payload;
     },
   },
   extraReducers: (builder) => {

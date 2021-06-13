@@ -7,9 +7,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Index,
+  Unique,
 } from 'typeorm';
 
 @Entity()
+@Unique(['userId', 'battleIndex'])
 class Scores {
   @PrimaryGeneratedColumn()
   // @ts-ignore

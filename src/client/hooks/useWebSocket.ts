@@ -1,5 +1,8 @@
 import { useCallback, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import ReconnectingWebSocket from 'reconnecting-websocket';
+import { WebSocketType } from '../../webSocketType';
+import { app } from '../modules/app';
 
 const socket = new ReconnectingWebSocket(WEBSOCKET_ORIGIN, undefined, {
   maxReconnectionDelay: 4000,
@@ -8,9 +11,11 @@ const socket = new ReconnectingWebSocket(WEBSOCKET_ORIGIN, undefined, {
 });
 
 const useWebSocket = () => {
+  const dispatch = useDispatch();
+
   const sendMessage = useCallback(
-    (message: string) => {
-      socket.send(message);
+    (request: WebSocketType) => {
+      socket.send(JSON.stringify(request));
     },
     [socket],
   );
@@ -20,7 +25,7 @@ const useWebSocket = () => {
       console.log('WebSocketサーバーと接続成功！');
     };
     socket.onmessage = (event: MessageEvent<string>) => {
-      alert(event.data); // eslint-disable-line no-alert
+      dispatch(app.actions.setData(JSON.parse(event.data)));
     };
     socket.onclose = () => {
       console.log('閉じます');
