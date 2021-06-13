@@ -165,7 +165,7 @@ const StyledTh = styled(TableCell)<Th & Setting>`
   font-size: ${({ fontSize }) => fontSize}px;
   font-weight: 700;
   > p {
-    overflow-x: hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     line-height: ${({ fontSize }) => fontSize + 4}px;
