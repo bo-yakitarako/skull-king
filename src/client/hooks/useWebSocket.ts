@@ -36,7 +36,6 @@ const useWebSocket = () => {
     };
     socket.onclose = () => {
       console.log('閉じます');
-      dispatch(app.actions.fetching());
     };
   }, [socket, fetched]);
 

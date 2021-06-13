@@ -7,6 +7,7 @@ import {
   DialogTitle,
   IconButton,
   Paper,
+  Typography,
 } from '@material-ui/core';
 import { Add, AddCircle, Remove, RemoveCircle } from '@material-ui/icons';
 import React, { useCallback } from 'react';
@@ -16,6 +17,7 @@ import { useDialog } from '../../hooks/useDialog';
 import { useEditScore } from '../../hooks/useEditScore';
 import { useOwnData } from '../../hooks/useOwnData';
 import { app } from '../../modules/app';
+import { media } from '../../style/media';
 
 const ScoreSendDialog: React.FC = () => {
   const dispatch = useDispatch();
@@ -40,23 +42,31 @@ const ScoreSendDialog: React.FC = () => {
           第{battleIndex + 1}
           戦の点数をボタンポチポチで決めてくなんせ。
         </DialogContentText>
-        <DialogContentText>
-          黒縁丸囲みのプラマイは50くらい変わるっぽいよ。
-        </DialogContentText>
+        <NoSmallSP>
+          <DialogContentText>
+            黒縁丸囲みのプラマイは50くらい変わるっぽいよ。
+          </DialogContentText>
+        </NoSmallSP>
         <LayoutInput>
-          <EditButton onClick={edit(-50)}>
-            <RemoveCircle />
-          </EditButton>
+          <NoSmallSP>
+            <EditButton onClick={edit(-50)}>
+              <RemoveCircle fontSize="large" />
+            </EditButton>
+          </NoSmallSP>
           <EditButton onClick={edit(-10)}>
-            <Remove />
+            <Remove fontSize="large" />
           </EditButton>
-          <ScoreDisplay>{scoreText}</ScoreDisplay>
+          <ScoreDisplay>
+            <ScoreText>{scoreText}</ScoreText>
+          </ScoreDisplay>
           <EditButton onClick={edit(10)}>
-            <Add />
+            <Add fontSize="large" />
           </EditButton>
-          <EditButton onClick={edit(50)}>
-            <AddCircle />
-          </EditButton>
+          <NoSmallSP>
+            <EditButton onClick={edit(50)}>
+              <AddCircle fontSize="large" />
+            </EditButton>
+          </NoSmallSP>
         </LayoutInput>
       </DialogContent>
       <DialogActions>
@@ -76,14 +86,20 @@ const ScoreSendDialog: React.FC = () => {
 
 export { ScoreSendDialog };
 
+const NoSmallSP = styled.div`
+  ${media.lessThan('tiny')`
+    display: none;
+  `}
+`;
+
 const LayoutInput = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
 `;
 
 const ScoreDisplay = styled(Paper)`
-  font-size: 18px;
   padding: 8px 0;
   margin: 0 8px;
   width: 80px;
@@ -92,6 +108,12 @@ const ScoreDisplay = styled(Paper)`
   background-color: ${({ theme }) => theme.palette.primary.light};
 `;
 
+const ScoreText = styled(Typography)`
+  font-size: 18px;
+  padding: 0;
+  margin: 0;
+`;
+
 const EditButton = styled(IconButton)`
-  padding: 8px;
+  padding: 5px;
 `;
