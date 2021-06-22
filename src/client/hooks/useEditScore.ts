@@ -17,7 +17,7 @@ const useEditScore = () => {
       return;
     }
     setScore(ownScores[battleIndex] || 0);
-  }, [ownScores, battleIndex]);
+  }, [battleIndex]);
 
   const sign = useMemo(() => {
     return score > 0 ? '+' : '';
