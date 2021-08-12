@@ -3,7 +3,7 @@
     "scripts": {
         "server": "nodemon -L",
         "watch": "WEBSOCKET_ORIGIN=ws://localhost:5001 webpack-cli serve --mode development",
-        "client-build": "WEBSOCKET_ORIGIN=ws://skull-king.bo-yakitarako.com/socket/ webpack --mode production",
+        "client-build": "WEBSOCKET_ORIGIN=ws://skullking.bo-yakitarako.com/socket/ webpack --mode production",
         "server-build": "tsc -p .",
         "build": "yarn server-build && yarn client-build",
         "production": "node ./dist/server/index.js",
